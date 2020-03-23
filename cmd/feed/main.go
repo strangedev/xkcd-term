@@ -16,7 +16,6 @@ var outputFormat string
 func init() {
 	flag.IntVar(&n, "n", 10, "maximum number of feed items to output")
 	flag.StringVar(&outputFormat, "o", "human", "controls the output format. Choose: 'human', 'json', 'yaml'")
-
 }
 
 func TextFormat(t string) string {
@@ -50,8 +49,8 @@ func main() {
 		fallthrough
 	default:
 		for _, post := range posts {
-			fmt.Printf("%s %s\n", TitleFormat(post.Title), URLFormat(post.ImageURL))
-			fmt.Println(TextFormat(post.Text))
+			fmt.Printf("%s %s \n", TitleFormat(post.Title), URLFormat(post.URL))
+			fmt.Println(TextFormat(post.ImageAltText))
 			fmt.Println()
 		}
 	}

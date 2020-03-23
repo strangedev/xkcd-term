@@ -7,16 +7,16 @@ import (
 )
 
 const XKCDAtom = "https://www.xkcd.com/atom.xml"
-const FeedSize = 4
 
 type Post struct {
-	Title string `json:"title"`
-	ImageURL string `json:"imageURL"`
-	Text string `json:"text"`
+	Title        string `json:"title"`
+	URL          string `json:"url"`
+	ImageURL     string `json:"imageUrl"`
+	ImageAltText string `json:"imageAltText"`
 }
 
 func GetPosts(n int) ([]Post, error) {
-	posts := make([]Post, 0, FeedSize)
+	posts := make([]Post, 0, n)
 	fp := gofeed.NewParser()
 	feed, err := fp.ParseURL(XKCDAtom)
 	if err != nil {
@@ -55,9 +55,10 @@ func GetPosts(n int) ([]Post, error) {
 		crawler(img)
 
 		post := Post{
-			Title:    item.Title,
-			ImageURL: src,
-			Text:     text,
+			Title:        item.Title,
+			ImageURL:     src,
+			ImageAltText: text,
+			URL:          item.GUID,
 		}
 		posts = append(posts, post)
 	}
