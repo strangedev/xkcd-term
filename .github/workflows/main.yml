@@ -6,7 +6,7 @@ name: CI
 # events but only for the master branch
 on:
   push:
-    tags: 
+    tags:
       - v*
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -19,7 +19,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@latest
 
     # Runs a single command using the runners shell
     - name: Run make
@@ -27,7 +27,7 @@ jobs:
 
     - id: create_release
       name: Create new release on GitHub
-      uses: actions/create-release@v1
+      uses: actions/create-release@latest
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -36,10 +36,10 @@ jobs:
         draft: false
         prerelease: false
     - name: Upload binary to GitHub
-      uses: actions/upload-release-assets@v1.0.1
+      uses: actions/upload-release-assets@latest
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with: 
+      with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./build/xkcd
         asset_name: xkcd-term-${{ github.sha }}-linux-amd64-glibc.zip
