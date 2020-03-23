@@ -1,8 +1,12 @@
 # xkcd-term
 
+![Build Status](https://github.com/strangedev/xkcd-term/workflows/CI/badge.svg)
+
 A super minimalistic xkcd viewer for the terminal with support for different output formats.
 
 I wrote this primarily to display the newest xkcds in my motd.
+
+![A screenshot of the human readable output](https://i.postimg.cc/Hnvbx4Sm/2020-03-24-005001-762x341-scrot.png)
 
 ## Usage
 
