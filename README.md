@@ -20,3 +20,16 @@ Usage of xkcd:
 ```shell script
 xdg-open "$( xkcd -o json | jq -r '.[0].url' )"
 ```
+
+
+## Install
+
+Get your [hot, fresh, and very chewy pre-built binaries for GNU/Linux](https://github.com/strangedev/xkcd-term/releases),
+or build from source. Go `v1.14` is recommended for building.
+
+```shell script
+git clone https://github.com/strangedev/xkcd-term.git
+cd xkcd-term
+make
+sudo make install
+```
