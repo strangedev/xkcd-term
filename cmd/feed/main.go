@@ -16,11 +16,13 @@ const XKCDAtom = "https://www.xkcd.com/atom.xml"
 var n int
 var outputFormat string
 var feedURL string
+var selectKey string
 
 func init() {
 	flag.IntVar(&n, "n", 10, "maximum number of feed items to output")
 	flag.StringVar(&outputFormat, "o", "human", "controls the output format. Choose: 'human', 'json', 'yaml', 'xml'")
 	flag.StringVar(&feedURL, "f", XKCDAtom, "controls the feed URL in case it changes in the future")
+	flag.StringVar(&selectKey, "s", "ImageURL", "selects key to output. For use only with 'select' output format. Choose: 'Title', 'URL', 'ImageURL', 'ImageAltText'")
 }
 
 func TextFormat(t string) string {
@@ -54,6 +56,23 @@ func main() {
 		out, err := xml.Marshal(posts)
 		catchall.CheckFatal("Can't encode posts", err)
 		fmt.Println(string(out))
+	case "select":
+		for _, post := range posts {
+			var value string
+			switch selectKey {
+			case "Title":
+				value = post.Title
+			case "ImageURL":
+				value = post.ImageURL
+			case "ImageAltText":
+				value = post.ImageAltText
+			case "URL":
+				fallthrough
+			default:
+				value = post.URL
+			}
+			fmt.Println(value)
+		}
 	case "human":
 		fallthrough
 	default:
