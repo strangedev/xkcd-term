@@ -13,7 +13,7 @@ xkcd: cmd/feed/main.go src/feed.go
 	$(CC) -o build/xkcd cmd/feed/main.go
 
 xkcd.sha256: xkcd
-	sha256sum build/xkcd > build/xkcd.sha256
+	cd build && sha256sum xkcd > xkcd.sha256
 
 install: build/xkcd
 	install build/xkcd $(PREFIX)/bin
