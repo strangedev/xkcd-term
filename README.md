@@ -14,9 +14,9 @@ I wrote this primarily to display the newest xkcds in my motd.
 $ xkcd -help
 Usage of xkcd:
   -n int
-      maximum number of feed items to output (default 10)
+    	maximum number of feed items to output (default 10)
   -o string
-      controls the output format. Choose: 'human', 'json', 'yaml' (default "human")
+    	controls the output format. Choose: 'human', 'json', 'yaml', 'xml' (default "human")
 ```
 
 **Example**: Open the latest xkcd in your default browser
@@ -36,4 +36,11 @@ git clone https://github.com/strangedev/xkcd-term.git
 cd xkcd-term
 make
 sudo make install
+```
+
+On Linux, you can use the `install-bin.sh` bash script to download
+and verify releases:
+
+```shell script
+./install-bin.sh v2.1.0
 ```

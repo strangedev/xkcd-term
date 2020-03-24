@@ -16,7 +16,7 @@ var outputFormat string
 
 func init() {
 	flag.IntVar(&n, "n", 10, "maximum number of feed items to output")
-	flag.StringVar(&outputFormat, "o", "human", "controls the output format. Choose: 'human', 'json', 'yaml'")
+	flag.StringVar(&outputFormat, "o", "human", "controls the output format. Choose: 'human', 'json', 'yaml', 'xml'")
 }
 
 func TextFormat(t string) string {
