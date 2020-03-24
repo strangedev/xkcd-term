@@ -20,7 +20,7 @@ var selectKey string
 
 func init() {
 	flag.IntVar(&n, "n", 10, "maximum number of feed items to output")
-	flag.StringVar(&outputFormat, "o", "human", "controls the output format. Choose: 'human', 'json', 'yaml', 'xml'")
+	flag.StringVar(&outputFormat, "o", "human", "controls the output format. Choose: 'human', 'json', 'yaml', 'xml', 'select'")
 	flag.StringVar(&feedURL, "f", XKCDAtom, "controls the feed URL in case it changes in the future")
 	flag.StringVar(&selectKey, "s", "ImageURL", "selects key to output. For use only with 'select' output format. Choose: 'Title', 'URL', 'ImageURL', 'ImageAltText'")
 }

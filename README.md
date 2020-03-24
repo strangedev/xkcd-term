@@ -18,7 +18,7 @@ Usage of build/xkcd:
   -n int
     	maximum number of feed items to output (default 10)
   -o string
-    	controls the output format. Choose: 'human', 'json', 'yaml', 'xml' (default "human")
+    	controls the output format. Choose: 'human', 'json', 'yaml', 'xml', 'select' (default "human")
   -s string
     	selects key to output. For use only with 'select' output format. Choose: 'Title', 'URL', 'ImageURL', 'ImageAltText' (default "ImageURL")
 ```
