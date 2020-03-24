@@ -11,12 +11,16 @@ import (
 	"xkcd-term/src"
 )
 
+const XKCDAtom = "https://www.xkcd.com/atom.xml"
+
 var n int
 var outputFormat string
+var feedURL string
 
 func init() {
 	flag.IntVar(&n, "n", 10, "maximum number of feed items to output")
 	flag.StringVar(&outputFormat, "o", "human", "controls the output format. Choose: 'human', 'json', 'yaml', 'xml'")
+	flag.StringVar(&feedURL, "f", XKCDAtom, "controls the feed URL in case it changes in the future")
 }
 
 func TextFormat(t string) string {
@@ -34,7 +38,7 @@ func TitleFormat(t string) string {
 func main() {
 	flag.Parse()
 
-	posts, err := src.GetPosts(n)
+	posts, err := src.GetPosts(n, feedURL)
 	catchall.CheckFatal("Can't get posts", err)
 
 	switch outputFormat {

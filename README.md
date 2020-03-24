@@ -12,11 +12,14 @@ I wrote this primarily to display the newest xkcds in my motd.
 
 ```shell script
 $ xkcd -help
-Usage of xkcd:
+Usage of build/xkcd:
+  -f string
+    	controls the feed URL in case it changes in the future (default "https://www.xkcd.com/atom.xml")
   -n int
     	maximum number of feed items to output (default 10)
   -o string
     	controls the output format. Choose: 'human', 'json', 'yaml', 'xml' (default "human")
+
 ```
 
 **Example**: Open the latest xkcd in your default browser

@@ -6,8 +6,6 @@ import (
 	"strings"
 )
 
-const XKCDAtom = "https://www.xkcd.com/atom.xml"
-
 type Post struct {
 	Title        string `json:"title"`
 	URL          string `json:"url"`
@@ -15,10 +13,10 @@ type Post struct {
 	ImageAltText string `json:"imageAltText"`
 }
 
-func GetPosts(n int) ([]Post, error) {
+func GetPosts(n int, feedURL string) ([]Post, error) {
 	posts := make([]Post, 0, n)
 	fp := gofeed.NewParser()
-	feed, err := fp.ParseURL(XKCDAtom)
+	feed, err := fp.ParseURL(feedURL)
 	if err != nil {
 		return nil, err
 	}
