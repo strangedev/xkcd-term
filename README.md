@@ -28,6 +28,12 @@ Usage of build/xkcd:
 xdg-open "$( xkcd -o json | jq -r '.[0].url' )"
 ```
 
+View the last 3 xkcds with `feh`
+
+```shell script
+xkcd -n 3 -o json | jq '.[].imageUrl' | xargs -n 1 feh   
+```
+
 
 ## Install
 
