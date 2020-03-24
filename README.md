@@ -28,13 +28,13 @@ Usage of build/xkcd:
 Open the latest xkcd in your default browser
 
 ```shell script
-xdg-open "$( xkcd -o json | jq -r '.[0].url' )"
+xdg-open $( xkcd -n 1 -o select -s URL )
 ```
 
 View the last 3 xkcds with `feh`
 
 ```shell script
-xkcd -n 3 -o json | jq '.[].imageUrl' | xargs -n 1 feh   
+xkcd -n 3 -o select -s ImageURL | xargs -n 1 feh
 ```
 
 Display the latest xkcd caption and URL with cowsay
