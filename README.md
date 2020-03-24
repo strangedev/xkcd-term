@@ -22,7 +22,9 @@ Usage of build/xkcd:
 
 ```
 
-**Example**: Open the latest xkcd in your default browser
+#### Examples
+
+Open the latest xkcd in your default browser
 
 ```shell script
 xdg-open "$( xkcd -o json | jq -r '.[0].url' )"
@@ -32,6 +34,16 @@ View the last 3 xkcds with `feh`
 
 ```shell script
 xkcd -n 3 -o json | jq '.[].imageUrl' | xargs -n 1 feh   
+```
+
+Display the latest xkcd caption and URL with cowsay
+
+```shell script
+#!/bin/bash
+xkcd_latest=$( xkcd -n 1 -o json )
+
+echo "$xkcd_latest" | jq '.[].imageAltText' | xargs cowsay -f three-eyes
+echo "$xkcd_latest" | jq '.[].imageUrl' 
 ```
 
 
