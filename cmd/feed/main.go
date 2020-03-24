@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"encoding/xml"
 	"flag"
 	"fmt"
 	"github.com/fatih/color"
@@ -43,6 +44,10 @@ func main() {
 		fmt.Println(string(out))
 	case "yaml":
 		out, err := yaml.Marshal(posts)
+		catchall.CheckFatal("Can't encode posts", err)
+		fmt.Println(string(out))
+	case "xml":
+		out, err := xml.Marshal(posts)
 		catchall.CheckFatal("Can't encode posts", err)
 		fmt.Println(string(out))
 	case "human":
