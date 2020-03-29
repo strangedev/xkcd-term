@@ -7,7 +7,8 @@ import (
 	"net/http"
 )
 
-func FetchPost(ID int) (*Post, error) {
+// GetComicMeta fetches an xkcd by ID, parses the page, and returns the comic's meta information
+func GetComicMeta(ID int) (*ComicMeta, error) {
 	rawURL := fmt.Sprintf("https://xkcd.com/%d/", ID)
 	resp, err := http.Get(rawURL)
 	if err != nil {
@@ -18,9 +19,16 @@ func FetchPost(ID int) (*Post, error) {
 		return nil, err
 	}
 
-	p := Post{ID: ID, URL: rawURL, ImageURL: "https:"}
+	p := ComicMeta{ID: ID, URL: rawURL, ImageURL: "https:"}
 
-	title := doc.Find("#ctitle").First()
+	title := doc.Find("#ctitle")
+	if len(title.Nodes) != 1 {
+		if len(title.Nodes) < 1 {
+			return nil, errors.New("can't find title in document")
+		} else {
+			return nil, errors.New(fmt.Sprintf("ambiguous title, got %d nodes", len(title.Nodes)))
+		}
+	}
 	p.Title = title.Text()
 
 	img := doc.Find("#comic img").First()
@@ -30,11 +38,11 @@ func FetchPost(ID int) (*Post, error) {
 	}
 	p.ImageURL += imageURL
 
-	imageAltText, ok := img.Attr("title")
+	caption, ok := img.Attr("title")
 	if !ok {
-		return nil, errors.New("can't find alt text in document")
+		return nil, errors.New("can't find caption in document")
 	}
-	p.ImageAltText = imageAltText
+	p.Caption = caption
 
 	return &p, nil
 }

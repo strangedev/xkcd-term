@@ -9,8 +9,8 @@ PHONY: xkcd.sha256
 clean:
 	rm build/*
 
-xkcd: cmd/feed/main.go src/feed.go
-	$(CC) -o build/xkcd cmd/feed/main.go
+xkcd: cmd/xkcd
+	$(CC) -o build/xkcd cmd/xkcd/main.go
 
 xkcd.sha256: xkcd
 	cd build && sha256sum xkcd > xkcd.sha256

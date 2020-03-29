@@ -57,7 +57,7 @@ Display the latest xkcd caption and URL with cowsay
 #!/bin/bash
 xkcd_latest=$( xkcd -o json )
 
-echo "$xkcd_latest" | jq '.[].ImageAltText' | xargs cowsay -f three-eyes
+echo "$xkcd_latest" | jq '.[].Caption' | xargs cowsay -f three-eyes
 echo "$xkcd_latest" | jq '.[].ImageURL'
 ```
 
