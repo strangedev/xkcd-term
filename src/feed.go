@@ -12,7 +12,7 @@ import (
 type Post struct {
 	Title        string `json:"Title"`
 	URL          string `json:"URL"`
-	ImageURL     string `json:"ImageUrl"`
+	ImageURL     string `json:"ImageURL"`
 	ImageAltText string `json:"ImageAltText"`
 	ID           int    `json:"ID"`
 }
