@@ -3,31 +3,52 @@ package src
 import (
 	"github.com/mmcdole/gofeed"
 	"golang.org/x/net/html"
+	"net/url"
+	"path/filepath"
+	"strconv"
 	"strings"
 )
 
 type Post struct {
-	Title        string `json:"title"`
-	URL          string `json:"url"`
-	ImageURL     string `json:"imageUrl"`
-	ImageAltText string `json:"imageAltText"`
+	Title        string `json:"Title"`
+	URL          string `json:"URL"`
+	ImageURL     string `json:"ImageUrl"`
+	ImageAltText string `json:"ImageAltText"`
+	ID           int    `json:"ID"`
 }
 
-func GetPosts(n int, feedURL string) ([]Post, error) {
-	posts := make([]Post, 0, n)
+func ParseID(rawURL string) (int, error) {
+	URL, err := url.Parse(rawURL)
+	if err != nil {
+		return 0, err
+	}
+	base := filepath.Base(URL.Path)
+	ID, err := strconv.Atoi(base)
+	if err != nil {
+		return 0, err
+	}
+	return ID, nil
+}
+
+func GetPostsAtom(posts *[]Post, n int, feedURL string) error {
 	fp := gofeed.NewParser()
 	feed, err := fp.ParseURL(feedURL)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	for i, item := range feed.Items {
 		if i >= n {
 			break
 		}
+		ID, err := ParseID(item.GUID)
+		if err != nil {
+			return err
+		}
+
 		img, err := html.Parse(strings.NewReader(item.Description))
 		if err != nil {
-			return nil, err
+			return err
 		}
 
 		var text, src string
@@ -53,12 +74,13 @@ func GetPosts(n int, feedURL string) ([]Post, error) {
 		crawler(img)
 
 		post := Post{
+			ID:           ID,
 			Title:        item.Title,
 			ImageURL:     src,
 			ImageAltText: text,
 			URL:          item.GUID,
 		}
-		posts = append(posts, post)
+		*posts = append(*posts, post)
 	}
-	return posts, nil
+	return nil
 }

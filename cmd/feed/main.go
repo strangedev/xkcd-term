@@ -17,12 +17,14 @@ var n int
 var outputFormat string
 var feedURL string
 var selectKey string
+var comicID int
 
 func init() {
-	flag.IntVar(&n, "n", 10, "maximum number of feed items to output")
+	flag.IntVar(&n, "n", 1, "maximum number of xkcds to output.")
 	flag.StringVar(&outputFormat, "o", "human", "controls the output format. Choose: 'human', 'json', 'yaml', 'xml', 'select'")
 	flag.StringVar(&feedURL, "f", XKCDAtom, "controls the feed URL in case it changes in the future")
-	flag.StringVar(&selectKey, "s", "ImageURL", "selects key to output. For use only with 'select' output format. Choose: 'Title', 'URL', 'ImageURL', 'ImageAltText'")
+	flag.StringVar(&selectKey, "s", "ImageURL", "selects value to output. For use only with 'select' output format. Choose: 'Title', 'URL', 'ImageURL', 'ImageAltText'")
+	flag.IntVar(&comicID, "i", 0, "(Optional) Selects the newest comic to output by ID. If it is 0, the atom feed is used to get the newest post.")
 }
 
 func TextFormat(t string) string {
@@ -40,8 +42,23 @@ func TitleFormat(t string) string {
 func main() {
 	flag.Parse()
 
-	posts, err := src.GetPosts(n, feedURL)
-	catchall.CheckFatal("Can't get posts", err)
+	posts := make([]src.Post, 0, n)
+	if comicID < 1 {
+		err := src.GetPostsAtom(&posts, n, feedURL)
+		catchall.CheckFatal("Can't read feed", err)
+		// we might still have posts to fetch
+		n -= len(posts)
+		comicID = posts[len(posts)-1].ID - 1
+	}
+
+	if comicID > 0 {
+		for i := n; i > 0; i-- {
+			post, err := src.FetchPost(comicID)
+			catchall.CheckFatal("Can't fetch post", err)
+			posts = append(posts, *post)
+			comicID--
+		}
+	}
 
 	switch outputFormat {
 	case "json":

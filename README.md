@@ -10,17 +10,19 @@ I wrote this primarily to display the newest xkcds in my motd.
 
 ## Usage
 
-```shell script
+```
 $ xkcd -help
 Usage of build/xkcd:
   -f string
     	controls the feed URL in case it changes in the future (default "https://www.xkcd.com/atom.xml")
+  -i int
+    	(Optional) Selects the newest comic to output by ID. If it is 0, the atom feed is used to get the newest post.
   -n int
-    	maximum number of feed items to output (default 10)
+    	maximum number of xkcds to output. (default 1)
   -o string
     	controls the output format. Choose: 'human', 'json', 'yaml', 'xml', 'select' (default "human")
   -s string
-    	selects key to output. For use only with 'select' output format. Choose: 'Title', 'URL', 'ImageURL', 'ImageAltText' (default "ImageURL")
+    	selects value to output. For use only with 'select' output format. Choose: 'Title', 'URL', 'ImageURL', 'ImageAltText' (default "ImageURL")
 ```
 
 #### Examples
@@ -28,20 +30,32 @@ Usage of build/xkcd:
 Open the latest xkcd in your default browser
 
 ```shell script
-xdg-open $( xkcd -n 1 -o select -s URL )
+xdg-open $( xkcd -o select -s URL )
 ```
 
-View the last 3 xkcds with `feh`
+View the last 5 xkcds with `feh`
 
 ```shell script
-xkcd -n 3 -o select -s ImageURL | xargs -n 1 feh
+xkcd -n 5 -o select -s ImageURL | xargs -n 1 feh
+```
+
+View xkcd number 2000
+
+```shell script
+xkcd -i 2000
+```
+
+View xkcds 190 - 200:
+
+```shell script
+xkcd -i 200 -n 11
 ```
 
 Display the latest xkcd caption and URL with cowsay
 
 ```shell script
 #!/bin/bash
-xkcd_latest=$( xkcd -n 1 -o json )
+xkcd_latest=$( xkcd -o json )
 
 echo "$xkcd_latest" | jq '.[].imageAltText' | xargs cowsay -f three-eyes
 echo "$xkcd_latest" | jq '.[].imageUrl' 
