@@ -80,14 +80,14 @@ func main() {
 				value = strconv.Itoa(meta.ID)
 			case "Title":
 				value = meta.Title
-			case "ImageURL":
-				value = meta.ImageURL
+			case "URL":
+				value = meta.URL
 			case "Caption":
 				value = meta.Caption
-			case "URL":
+			case "ImageURL":
 				fallthrough
 			default:
-				value = meta.URL
+				value = meta.ImageURL
 			}
 			fmt.Println(value)
 		}
