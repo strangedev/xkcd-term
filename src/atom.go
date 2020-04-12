@@ -39,7 +39,7 @@ func GetLatestComicMetas(metas *[]ComicMeta, nMax int, feedURL string) error {
 		if !ok {
 			return errors.New("can't find caption")
 		}
-		src, ok = img.Attr("title")
+		src, ok = img.Attr("src")
 		if !ok {
 			return errors.New("can't find image url")
 		}

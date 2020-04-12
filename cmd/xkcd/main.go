@@ -22,7 +22,7 @@ func init() {
 	flag.IntVar(&n, "n", 1, "maximum number of xkcds to output.")
 	flag.StringVar(&outputFormat, "o", "human", "controls the output format. Choose: 'human', 'json', 'yaml', 'xml', 'select'")
 	flag.StringVar(&feedURL, "f", src.XKCDAtom, "controls the atom feed URL in case it changes in the future")
-	flag.StringVar(&selectKey, "s", "ImageURL", "selects value to output. For use only with 'select' output format. Choose: 'Title', 'URL', 'ImageURL', 'Caption'")
+	flag.StringVar(&selectKey, "s", "URL", "selects value to output. For use only with 'select' output format. Choose: 'Title', 'URL', 'ImageURL', 'Caption'")
 	flag.IntVar(&comicID, "i", 0, "(Optional) Selects the newest comic to output by ID. If it is 0, the atom xkcd is used to get the newest post.")
 }
 
