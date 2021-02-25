@@ -12,9 +12,9 @@ I wrote this primarily to display the newest xkcds in my motd.
 
 ```
 $ xkcd -help
-Usage of build/xkcd:
+Usage of xkcd:
   -f string
-    	controls the feed URL in case it changes in the future (default "https://www.xkcd.com/atom.xml")
+    	controls the atom feed URL in case it changes in the future (default "https://www.xkcd.com/atom.xml")
   -i int
     	(Optional) Selects the newest comic to output by ID. If it is 0, the atom feed is used to get the newest post.
   -n int
@@ -22,7 +22,9 @@ Usage of build/xkcd:
   -o string
     	controls the output format. Choose: 'human', 'json', 'yaml', 'xml', 'select' (default "human")
   -s string
-    	selects value to output. For use only with 'select' output format. Choose: 'Title', 'URL', 'ImageURL', 'ImageAltText' (default "ImageURL")
+    	selects value to output. For use only with 'select' output format. Choose: 'Title', 'URL', 'ImageURL', 'Caption' (default "ImageURL")
+  -t uint
+    	(Optional) Number of hours after which the feed cache is marked as stale. To improve performance, the feed is only fetched every few hours. Setting -t to 0 disables the cache. This option only applies when fetching the latest comics, i.e. when -i is 0. Also, when fetching more than about 4 comics using -n, they might not all be in the cache in which case they're fetched without the cache. (default 8)
 ```
 
 #### Examples
@@ -57,14 +59,14 @@ Display the latest xkcd caption and URL with cowsay
 #!/bin/bash
 xkcd_latest=$( xkcd -o json )
 
-echo "$xkcd_latest" | jq '.[].Caption' | xargs cowsay -f three-eyes
-echo "$xkcd_latest" | jq '.[].ImageURL'
+echo "$xkcd_latest" | jq -r '.[].Caption' | xargs cowsay -f three-eyes
+echo "$xkcd_latest" | jq -r '.[].ImageURL'
 ```
 
 
 ## Install
 
-Get your [hot, fresh, and very chewy pre-built binaries for GNU/Linux](https://github.com/strangedev/xkcd-term/releases),
+Get your [hot, fresh, and glitter-filled pre-built binaries for GNU/Linux](https://github.com/strangedev/xkcd-term/releases),
 or build from source. Go `v1.14` is recommended for building.
 
 ```shell script
